@@ -11,7 +11,8 @@ OSX: `brew install Jens0512/tap/no`
 
 Linux: 
 ```
-git clone https://github.com/Jens0512/no.git
+git clone https://github.com/Jens0512/no.git 
+cd no
 sudo make install INSTALL_LOCATION=/usr/bin/no
 ```
 
