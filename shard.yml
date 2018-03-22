@@ -4,10 +4,6 @@ version: 0.1.0
 authors:
   - Jens <jens0512@osloskolen.no>
 
-targets:
-  no:
-    main: src/no.cr
-
 crystal: 0.24.1
 
 license: MIT

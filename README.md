@@ -1,6 +1,9 @@
 # no
 
-TODO: Write a description here
+```
+$ no Chess is boring
+"Chess is boring" No.
+```
 
 ## Installation
 
