@@ -7,15 +7,28 @@ $ no Chess is boring
 
 ## Installation
 
-TODO: Write installation instructions here
+OSX: `brew install Jens0512/tap/no`
+
+Linux: 
+```
+git clone https://github.com/Jens0512/no.git
+sudo make install INSTALL_LOCATION=/usr/bin/no
+```
 
 ## Usage
 
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
+```text
+Usage: No [opts] [args...]
+    -o, --or                         Or what? Use alternate end instead of end
+    -e, --end                        Specify end (default: '.'
+    -a, --alternate-end              Specify alternate end (-o flag) (default: '?'
+    -s SURROUND, --surround=SURROUND Sets what to surround the args with (default: ")
+    -d DENIAL, --delimeter=DENIAL    Sets how the joined args are denied (default: No)
+    -j JOIN, --join=JOIN             Specify what to join the args with (default: ' ')
+    -n NOTHING, --on-nothing=NOTHING Specify what to print, when no args are received (default: <Nothing>)
+    -q, --question                   Do not print anything, only return the exit code for input
+    -h, --help                       Show this help
+```
 
 ## Contributing
 
@@ -27,4 +40,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) Jens - creator, maintainer
+- [Jens0512](https://github.com/Jens0512) Jens - creator, maintainer
