@@ -15,10 +15,6 @@ class No
   @@split?   = true
   @@regex    = /\s+/
 
-  def self.run(io : IO)
-    self.run ARGF.read.split(/\s+/)
-  end
-
   def self.run(args : Array(String))
     begin
       OptionParser.parse(args) do |parser|
@@ -42,8 +38,8 @@ class No
 
         parser.unknown_args do |args|
           processed = args
-          processed.map!(&.split(@@regex)) if @@split?
-          to_print = %[#{@@surr}#{args.empty? ? @@nothing : processed.join(@@join_s)}#{@@surr} #{@@denial}#{@@q? ? @@a_end_s : @@end_s}]
+          processed.map!(&.split(@@regex)) if @@split? 
+          to_print = %[#{@@surr}#{processed.empty? ? @@nothing : processed.join(@@join_s)}#{@@surr} #{@@denial}#{@@q? ? @@a_end_s : @@end_s}]
         end
       end
     rescue
@@ -74,4 +70,14 @@ class No
   end
 end
 
-No.run(ARGV + ARGF.read.split(/\s+/))
+input = [] of String
+
+unless ARGV.empty?
+  input += ARGV
+end
+
+if ARGF
+  input += ARGF.read.split(/\s+/))
+end
+
+No.run input
