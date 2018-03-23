@@ -16,7 +16,7 @@ class No
   @@regex    = /\s+/
 
   def self.run(io : IO)
-
+    self.run ARGF.read.split(/\s+/)
   end
 
   def self.run(args : Array(String))
@@ -74,4 +74,4 @@ class No
   end
 end
 
-No.run ARGV ARGF.read.split /\s+/
+No.run(ARGV + ARGF.read.split(/\s+/))
