@@ -1,12 +1,13 @@
-require "./no/*"
+require "./deny/*"
 require "option_parser"
 
-class NoException < Exception; end
-
-module No
+module Deny
   extend self  
 
   alias InType = String | Char
+
+  @@output   : IO = STDOUT
+  @@errput   : IO = STDERR
 
   @@end_s    : InType = '.'
   @@a_end_s  : InType = '?'
@@ -26,12 +27,12 @@ module No
   @@to_print = nil
   @@regex    = /\s+/
 
-  GITHUB_REPO_LINK = "https://github.com/Jens0512/no"
+  GITHUB_REPO_LINK = "https://github.com/Jens0512/deny"
 
-  def run(args : Array(String))
+  def run(args : Array(String), @@output : IO = @@output)
     begin
       OptionParser.parse(args) do |parser|
-        parser.banner = "Usage: No [opts] [args...]"
+        parser.banner = "Usage: Deny [opts] [args...]"
 
         parser.on("-o", "--or", 
           "Or what? Use alternate end instead of end")\
@@ -75,7 +76,7 @@ module No
 
         parser.on("-v", "--version",
           "Prints version")\
-            { version }
+            { version ? exit : err!("Failed to print version.") } 
 
         parser.on("--no-split", 
           "Do not split the args, to be joined with JOIN afterwards")\
@@ -103,53 +104,60 @@ module No
               @@to_print = @@denial
             else
               @@to_print = "#{@@surr}#{@@nothing}#{@@surr} #{@@denial}#{@@q ? @@a_end_s : @@end_s}"
-            end            
+            end
           else
             @@to_print = "#{@@surr}#{processed.join(@@join_s)}#{@@surr} #{@@denial}#{@@q ? @@a_end_s : @@end_s}"
-          end          
+          end
         end
       end      
     rescue e
       err! e
     end
 
-    @@to_print || err! "You have found a err! The dev sucks. Please open an issue here: #{GITHUB_REPO_LINK}"
+    @@to_print || err! "Deny@@to_print is nil!"
+
+    if @@times < 0
+      @@to_print = @@to_print.not_nil!.reverse 
+    end
 
     unless @@test 
       @@times.times do
-        puts @@to_print
+        @@output.puts @@to_print
       end
     end
   end
 
   def set_times(times)
-    begin 
-      raise "" unless t = times.to_i?
-      raise "" unless t >= 0
-
-      @@times = times.to_i
-    rescue
-      err! %["#{times}" is not a valid amount of times (number)]
+    if t = times.to_i?
+      @@times = t
+    else
+      fail! %["#{times}" is not a valid amount of times (number)] 
     end
   end
 
   def set_regex(regex : String)
     @@regex = Regex.new regex
+    debug_puts "Regex set to #{@@regex}"
   end
 
   def debug_puts(msg)
-    puts msg if @@debug
+    @@output.puts msg if @@debug
   end
 
   def version
-    puts "No v#{VERSION}"
-    exit 0
+    @@output.puts "Deny v#{VERSION}"
   end
 
-  def err!(message)
-    puts message unless @@test
-    exit 1
+  def fail!(message, exit_status = 1)
+    debug_puts "Program failed!"
+    @@errput.puts message unless @@test
+    exit exit_status
   end
+
+  def err!(message = nil)
+    mem = IO::Memory.new
+    mem << message if message
+    mem << "You have found a error! The dev sucks. Please open an issue here: #{GITHUB_REPO_LINK}/issues/new, including steps to reproduce"
+    fail! mem, 2
+  end  
 end
-
-No.run ARGV
