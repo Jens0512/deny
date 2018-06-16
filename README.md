@@ -1,4 +1,4 @@
-# no
+# deny
 
 ```
 $ deny "Chess is boring"
@@ -8,9 +8,9 @@ $ deny "Chess is boring"
 ## Installation
 
 ```
-git clone https://github.com/Jens0512/no.git 
-cd no
-sudo make install INSTALL_LOCATION=/usr/bin/no
+git clone https://github.com/Jens0512/deny.git 
+cd deny
+sudo make install INSTALL_LOCATION=/usr/local/bin/deny
 ```
 
 ## Usage
