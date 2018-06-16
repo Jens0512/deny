@@ -1,15 +1,12 @@
 # no
 
 ```
-$ no Chess is boring
+$ deny "Chess is boring"
 "Chess is boring" No.
 ```
 
 ## Installation
 
-OSX: `brew install Jens0512/tap/no`
-
-Linux: 
 ```
 git clone https://github.com/Jens0512/no.git 
 cd no
@@ -19,7 +16,7 @@ sudo make install INSTALL_LOCATION=/usr/bin/no
 ## Usage
 
 ```text
-Usage: No [opts] [args...]
+Usage: deny [opts] [args...]
     -o, --or                         Or what? Use alternate end instead of end
     -e, --end                        Specify end (default: '.'
     -a, --alternate-end              Specify alternate end (-o flag) (default: '?'
